@@ -20,7 +20,7 @@
         <form method="POST" action="{% url 'app:create' %}">
             {% csrf_token %}
             <div id="input" class="row pr-3 pt-4">
-                <input id="new-todo" type="text" class="form-control col-8">
+                <input name="title" id="new-todo" type="text" class="form-control col-8">
                 <div class="col-4">
                     <button class="btn btn-danger text-white ">Don't Forget!</button>
                 </div>
@@ -29,9 +29,16 @@
     </div>
     <div class="container pt-5">
         <div id="filter">
-            <button class="btn btn-primary text-white">All</button>
-            <button class="btn btn-primary text-white">Active</button>
-            <button class="btn btn-primary text-white">Completed</button>
+
+            <a href="{% url 'app:todos' %}?filter=ALL">
+                <button class="btn btn-primary text-white">All</button>
+            </a>
+            <a href="{% url 'app:todos' %}?filter=ACTIVE">
+                <button class="btn btn-primary text-white">Active</button>
+            </a>
+            <a href="{% url 'app:todos' %}?filter=COMPLETED">
+                <button class="btn btn-primary text-white">Completed</button>
+            </a>
         </div>
     </div>
     <div class="container pt-5">

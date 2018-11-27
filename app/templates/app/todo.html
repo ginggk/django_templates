@@ -1,26 +1,44 @@
-<!-- {{ todo }} -->
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-
-<body>
-    <div class="container ">
-        <div class="row d-flex justify-content-around">
+<div class="container ">
+    <div class="row d-flex justify-content-around pb-3">
+        <form method="POST" action="{% url 'app:toggle_editing' todo.id%}">
+            {% csrf_token %}
             <button class="btn btn-primary text-white">edit</button>
-            <p>{{ todo.title }}</p>
-            <i class="fas fa-check-square"></i>
-            <button class="btn btn-success text-white">toggle complete</button>
-            <button class="btn btn-danger">delete</button>
-        </div>
-    </div>
-    <br>
-</body>
+        </form>
+        {% if todo.editing %}
+        <form class="d-flex" method="POST" action="{% url 'app:new-title' todo.id%}">
+            {% csrf_token %}
+            <input name="title" type="text" class="form-control col-10">
+            <button class="btn btn-primary"><i class="fas fa-save"></i></button>
+        </form>
 
-</html>
+        {% else %}
+        <p>{{ todo.title }}</p>
+        {% endif %}
+
+        <div class="d-flex ">
+
+            {% if todo.completed %}
+            <div class="pr-2">
+                <i class="fas fa-check"></i>
+            </div>
+            {% else %}
+            <div class="pr-2">
+                <i class="fas fa-times"></i>
+            </div>
+            {% endif %}
+            <!-- {{ todo.title}} {{todo.completed}} -->
+            <form method="POST" action="{% url 'app:toggle_completed' todo.id%}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success text-white">toggle complete</button>
+            </form>
+        </div>
+
+        <form method="POST" action="{% url 'app:delete' todo.id%}">
+            {% csrf_token %}
+            <button class="btn btn-danger">delete</button>
+        </form>
+
+
+
+    </div>
+</div>
